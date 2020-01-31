@@ -15,6 +15,11 @@ namespace DotNetCoreSqlDb.Controllers
             return View();
         }
 
+        public IActionResult Signin()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
