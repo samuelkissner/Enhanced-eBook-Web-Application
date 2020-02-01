@@ -9,19 +9,19 @@ using DotNetCoreSqlDb.Models;
 
 namespace DotNetCoreSqlDb.Controllers
 {
-    public class TodosController : Controller
+    public class EbooksController : Controller
     {
         private readonly MyDatabaseContext _context;
 
-        public TodosController(MyDatabaseContext context)
+        public EbooksController(MyDatabaseContext context)
         {
             _context = context;
         }
 
-        // GET: Todos
+        // GET: Ebooks
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Todo.ToListAsync());
+            return View(await _context.Ebook.ToListAsync());
         }
 
         // GET: Todos/Details/5

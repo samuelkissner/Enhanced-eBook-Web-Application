@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DotNetCoreSqlDb.Models.Todo>
+﻿@model IEnumerable<DotNetCoreSqlDb.Models.Ebook>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,29 +13,35 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
+                @Html.DisplayNameFor(model => model.Author)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Done)
+                @Html.DisplayNameFor(model => model.EbookContents)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Size)
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
+                @Html.DisplayFor(modelItem => item.Author)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Done)
+                @Html.DisplayFor(modelItem => item.EbookContents)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Size)
+            </td>
+
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
