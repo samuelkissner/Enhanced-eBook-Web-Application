@@ -24,7 +24,7 @@ namespace DotNetCoreSqlDb.Controllers
             return View(await _context.Ebook.ToListAsync());
         }
 
-        // GET: Todos/Details/5
+        // GET: Ebooks/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +32,39 @@ namespace DotNetCoreSqlDb.Controllers
                 return NotFound();
             }
 
-            var todo = await _context.Todo
+            var ebook = await _context.Ebook
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (todo == null)
+            if (ebook == null)
             {
                 return NotFound();
             }
 
-            return View(todo);
+            return View(ebook);
         }
 
-        // GET: Todos/Create
+        // GET: Ebook/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Todos/Create
+        // POST: Ebooks/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Description,CreatedDate,Done")] Todo todo)
+        public async Task<IActionResult> Create([Bind("ID,Title,Author,Size,File")] Ebook ebook)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(todo);
+                _context.Add(ebook);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(todo);
+            return View(ebook);
         }
 
-        // GET: Todos/Edit/5
+        // GET: Ebooks/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +72,22 @@ namespace DotNetCoreSqlDb.Controllers
                 return NotFound();
             }
 
-            var todo = await _context.Todo.FindAsync(id);
-            if (todo == null)
+            var ebook = await _context.Ebook.FindAsync(id);
+            if (ebook == null)
             {
                 return NotFound();
             }
-            return View(todo);
+            return View(ebook);
         }
 
-        // POST: Todos/Edit/5
+        // POST: Ebooks/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Description,CreatedDate,Done")] Todo todo)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Title,Author,Size,File")] Ebook ebook)
         {
-            if (id != todo.ID)
+            if (id != ebook.ID)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace DotNetCoreSqlDb.Controllers
             {
                 try
                 {
-                    _context.Update(todo);
+                    _context.Update(ebook);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TodoExists(todo.ID))
+                    if (!EbookExists(ebook.ID))
                     {
                         return NotFound();
                     }
@@ -112,7 +112,7 @@ namespace DotNetCoreSqlDb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(todo);
+            return View(ebook);
         }
 
         // GET: Todos/Delete/5
@@ -123,7 +123,7 @@ namespace DotNetCoreSqlDb.Controllers
                 return NotFound();
             }
 
-            var todo = await _context.Todo
+            var todo = await _context.Ebook
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (todo == null)
             {
@@ -133,20 +133,20 @@ namespace DotNetCoreSqlDb.Controllers
             return View(todo);
         }
 
-        // POST: Todos/Delete/5
+        // POST: Ebooks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var todo = await _context.Todo.FindAsync(id);
-            _context.Todo.Remove(todo);
+            var ebook = await _context.Ebook.FindAsync(id);
+            _context.Ebook.Remove(ebook);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TodoExists(int id)
+        private bool EbookExists(int id)
         {
-            return _context.Todo.Any(e => e.ID == id);
+            return _context.Ebook.Any(e => e.ID == id);
         }
     }
 }

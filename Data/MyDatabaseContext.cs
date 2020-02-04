@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+
 namespace DotNetCoreSqlDb.Models
 {
     public class MyDatabaseContext : DbContext
@@ -15,6 +16,6 @@ namespace DotNetCoreSqlDb.Models
             //conn.AccessToken = (new Microsoft.Azure.Services.AppAuthentication.AzureServiceTokenProvider()).GetAccessTokenAsync("https://database.windows.net/").Result;
         }
 
-        public DbSet<DotNetCoreSqlDb.Models.Todo> Todo { get; set; }
+        public DbSet<DotNetCoreSqlDb.Models.Ebook> Ebook { get; set; }
     }
 }

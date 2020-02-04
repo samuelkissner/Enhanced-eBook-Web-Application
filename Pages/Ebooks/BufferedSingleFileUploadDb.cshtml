@@ -1,0 +1,42 @@
+﻿@page
+@model BufferedSingleFileUploadDbModel
+@{
+    ViewData["Title"] = "Buffered Single File Upload (Db)";
+}
+
+<h1>Upload one buffered file to a database with one file upload control</h1>
+
+<form enctype="multipart/form-data" method="post">
+    <dl>
+        <dt>
+            <label asp-for="FileUpload.Title"></label>
+        </dt>
+        <dd>
+            <input asp-for="FileUpload.Title" type="text" />
+            <span asp-validation-for="FileUpload.Title"></span>
+        </dd>
+        <dt>
+            <label asp-for="FileUpload.Author"></label>
+        </dt>
+        <dd>
+            <input asp-for="FileUpload.Author" type="text" />
+            <span asp-validation-for="FileUpload.Author"></span>
+        </dd>
+        <dt>
+            <label asp-for="FileUpload.FormFile"></label>
+        </dt>
+        <dd>
+            <input asp-for="FileUpload.FormFile" type="file" />
+            <span asp-validation-for="FileUpload.FormFile"></span>
+        </dd>
+    </dl>
+    <input asp-page-handler="Upload" class="btn" type="submit" value="Upload" />
+</form>
+
+<p class="result">
+    @Model.Result
+</p>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -6,11 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Home\Signin.cshtml" />
+    <Content Remove="Pages\Home\Signin.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\Home\Signin.cshtml" />
+    <None Include="Pages\Home\Signin.cshtml" />
   </ItemGroup>
 
 

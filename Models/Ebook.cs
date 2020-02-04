@@ -1,8 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+
+
 
 namespace DotNetCoreSqlDb.Models
 {
@@ -12,10 +11,22 @@ namespace DotNetCoreSqlDb.Models
         public string Title { get; set; }
         public string Author { get; set; }
 
-        //indicates storage size (in MB) for ebook
-        public double Size { get; set; }
+        public byte[] Content { get; set; }
 
-        public byte[] EbookContents { get; set; }
+        [Display(Name = "File Name")]
+        public string UntrustedName { get; set; }
+
+
+        [Display(Name = "Size (bytes)")]
+        [DisplayFormat(DataFormatString = "{0:N0}")]
+        public long Size { get; set; }
+
+        [Display(Name = "Uploaded (UTC)")]
+        [DisplayFormat(DataFormatString = "{0:G}")]
+        public DateTime UploadDT { get; set; }
+
     }
 }
+
+
 

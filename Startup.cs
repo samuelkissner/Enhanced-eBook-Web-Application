@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using DotNetCoreSqlDb.Models;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
+using DotNetCoreSqlDb.Filters;
 
 namespace DotNetCoreSqlDb
 {
@@ -34,9 +34,35 @@ namespace DotNetCoreSqlDb
             });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddControllers();
 
-            
+
+            #region snippet_AddRazorPages
+            services.AddRazorPages()
+                .AddRazorPagesOptions(options =>
+                {
+                    options.Conventions
+                        .AddPageApplicationModelConvention("/StreamedSingleFileUploadDb",
+                            model =>
+                            {
+                                model.Filters.Add(
+                                    new GenerateAntiforgeryTokenCookieAttribute());
+                                model.Filters.Add(
+                                    new DisableFormValueModelBindingAttribute());
+                            });
+                    options.Conventions
+                        .AddPageApplicationModelConvention("/StreamedSingleFileUploadPhysical",
+                            model =>
+                            {
+                                model.Filters.Add(
+                                    new GenerateAntiforgeryTokenCookieAttribute());
+                                model.Filters.Add(
+                                    new DisableFormValueModelBindingAttribute());
+                            });
+                });
+            #endregion
+
             // Use SQL Database if in Azure, otherwise, use SQLite
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
                 services.AddDbContext<MyDatabaseContext>(options =>
@@ -49,12 +75,7 @@ namespace DotNetCoreSqlDb
             services.BuildServiceProvider().GetService<MyDatabaseContext>().Database.Migrate();
             
 
-            /*
-            //when using Azure Active Directory authentication, use MyDbConnection (set in appsettings.json) for azure production and local developement environments
-            services.AddDbContext<MyDatabaseContext>(options => {
-                options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection"));
-            });
-            */
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,8 +101,8 @@ namespace DotNetCoreSqlDb
             
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Todos}/{action=Index}/{id?}");
-                    //template: "{controller=Home}/{action=Signin}/{id?}");
+                    template: "{controller=Ebooks}/{action=Index}/{id?}");
+          
             });
         }
     }
