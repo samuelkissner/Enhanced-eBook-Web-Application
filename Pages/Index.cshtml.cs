@@ -6,30 +6,29 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
-using DotNetCoreSqlDb.Data;
-using DotNetCoreSqlDb.Models;
 
-namespace DotNetCoreSqlDb.Pages
+using SampleApp.Data;
+using SampleApp.Models;
+
+namespace SampleApp.Pages
 {
     public class IndexModel : PageModel
     {
         private readonly AppDbContext _context;
-        private readonly IFileProvider _fileProvider;
-
-        public IndexModel(AppDbContext context, IFileProvider fileProvider)
+      
+        public IndexModel(AppDbContext context)
         {
             _context = context;
-            _fileProvider = fileProvider;
+           
         }
 
-        public IList<AppFile> DatabaseFiles { get; private set; }
-        public IDirectoryContents PhysicalFiles { get; private set; }
+        public IList<Ebook> DatabaseFiles { get; private set; }
+        
 
         public async Task OnGetAsync()
         {
-            DatabaseFiles = await _context.File.AsNoTracking().ToListAsync();
-            PhysicalFiles = _fileProvider.GetDirectoryContents(string.Empty);
+            DatabaseFiles = await _context.Ebook.AsNoTracking().ToListAsync();
+            
         }
 
         public async Task<IActionResult> OnGetDownloadDbAsync(int? id)
@@ -39,7 +38,7 @@ namespace DotNetCoreSqlDb.Pages
                 return Page();
             }
 
-            var requestFile = await _context.File.SingleOrDefaultAsync(m => m.Id == id);
+            var requestFile = await _context.Ebook.SingleOrDefaultAsync(m => m.ID == id);
 
             if (requestFile == null)
             {
@@ -50,11 +49,6 @@ namespace DotNetCoreSqlDb.Pages
             return File(requestFile.Content, MediaTypeNames.Application.Octet, WebUtility.HtmlEncode(requestFile.UntrustedName));
         }
 
-        public IActionResult OnGetDownloadPhysical(string fileName)
-        {
-            var downloadFile = _fileProvider.GetFileInfo(fileName);
-
-            return PhysicalFile(downloadFile.PhysicalPath, MediaTypeNames.Application.Octet, fileName);
-        }
+        
     }
 }

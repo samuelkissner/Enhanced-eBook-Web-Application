@@ -2,7 +2,7 @@ using System;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace DotNetCoreSqlDb.Filters
+namespace SampleApp.Filters
 {
     #region snippet_DisableFormValueModelBindingAttribute
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
@@ -12,7 +12,6 @@ namespace DotNetCoreSqlDb.Filters
         {
             var factories = context.ValueProviderFactories;
             factories.RemoveType<FormValueProviderFactory>();
-            factories.RemoveType<FormFileValueProviderFactory>();
             factories.RemoveType<JQueryFormValueProviderFactory>();
         }
 

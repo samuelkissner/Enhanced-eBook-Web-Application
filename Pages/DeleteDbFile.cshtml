@@ -16,10 +16,16 @@
         @Model.RemoveFile.UntrustedName
     </dd>
     <dt>
-        @Html.DisplayNameFor(model => model.RemoveFile.Note)
+        @Html.DisplayNameFor(model => model.RemoveFile.Title)
     </dt>
     <dd>
-        @Html.DisplayFor(model => model.RemoveFile.Note)
+        @Html.DisplayFor(model => model.RemoveFile.Title)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.RemoveFile.Author)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.RemoveFile.Author)
     </dd>
     <dt>
         @Html.DisplayNameFor(model => model.RemoveFile.Size)
@@ -36,6 +42,6 @@
 </dl>
 
 <form method="post">
-    <input type="hidden" asp-for="RemoveFile.Id" />
+    <input type="hidden" asp-for="RemoveFile.ID" />
     <input type="submit" value="Delete" class="btn btn-default" />
 </form>

@@ -2,10 +2,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using DotNetCoreSqlDb.Data;
-using DotNetCoreSqlDb.Models;
+using SampleApp.Data;
+using SampleApp.Models;
 
-namespace DotNetCoreSqlDb.Pages.Ebooks
+namespace SampleApp.Pages
 {
     public class DeleteDbFileModel : PageModel
     {
@@ -17,7 +17,7 @@ namespace DotNetCoreSqlDb.Pages.Ebooks
         }
 
         [BindProperty]
-        public AppFile RemoveFile { get; private set; }
+        public Ebook RemoveFile { get; private set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -26,7 +26,7 @@ namespace DotNetCoreSqlDb.Pages.Ebooks
                 return RedirectToPage("/Index");
             }
 
-            RemoveFile = await _context.File.SingleOrDefaultAsync(m => m.Id == id);
+            RemoveFile = await _context.Ebook.SingleOrDefaultAsync(m => m.ID == id);
 
             if (RemoveFile == null)
             {
@@ -43,11 +43,11 @@ namespace DotNetCoreSqlDb.Pages.Ebooks
                 return RedirectToPage("/Index");
             }
 
-            RemoveFile = await _context.File.FindAsync(id);
+            RemoveFile = await _context.Ebook.FindAsync(id);
 
             if (RemoveFile != null)
             {
-                _context.File.Remove(RemoveFile);
+                _context.Ebook.Remove(RemoveFile);
                 await _context.SaveChangesAsync();
             }
 

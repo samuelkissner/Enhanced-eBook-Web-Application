@@ -5,18 +5,19 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
-using DotNetCoreSqlDb.Models;
-using DotNetCoreSqlDb.Utilities;
+using SampleApp.Data;
+using SampleApp.Models;
+using SampleApp.Utilities;
 
-namespace DotNetCoreSqlDb.Pages.Ebooks
+namespace SampleApp.Pages
 {
     public class BufferedSingleFileUploadDbModel : PageModel
     {
-        private readonly MyDatabaseContext _context;
+        private readonly AppDbContext _context;
         private readonly long _fileSizeLimit;
         private readonly string[] _permittedExtensions = { ".txt" };
 
-        public BufferedSingleFileUploadDbModel(MyDatabaseContext context, 
+        public BufferedSingleFileUploadDbModel(AppDbContext context, 
             IConfiguration config)
         {
             _context = context;
@@ -69,12 +70,12 @@ namespace DotNetCoreSqlDb.Pages.Ebooks
 
             var file = new Ebook
             {
-                Content = formFileContent, 
-                UntrustedName = FileUpload.FormFile.FileName, 
+                Content = formFileContent,
+                UntrustedName = FileUpload.FormFile.FileName,
                 Title = FileUpload.Title,
                 Author = FileUpload.Author,
 
-                Size = FileUpload.FormFile.Length, 
+                Size = FileUpload.FormFile.Length,
                 UploadDT = DateTime.UtcNow
             };
 
@@ -88,10 +89,10 @@ namespace DotNetCoreSqlDb.Pages.Ebooks
     public class BufferedSingleFileUploadDb
     {
         [Required]
-        [Display(Name="File")]
+        [Display(Name = "File")]
         public IFormFile FormFile { get; set; }
 
-        [Display(Name="Title")]
+        [Display(Name = "Title")]
         [StringLength(50, MinimumLength = 0)]
         public string Title { get; set; }
 

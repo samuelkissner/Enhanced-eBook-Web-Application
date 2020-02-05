@@ -1,9 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-
-
-namespace DotNetCoreSqlDb.Models
+namespace SampleApp.Models
 {
     public class Ebook
     {
@@ -27,6 +25,3 @@ namespace DotNetCoreSqlDb.Models
 
     }
 }
-
-
-

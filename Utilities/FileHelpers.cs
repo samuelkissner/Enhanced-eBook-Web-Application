@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Net.Http.Headers;
 
-namespace DotNetCoreSqlDb.Utilities
+namespace SampleApp.Utilities
 {
     public static class FileHelpers
     {
