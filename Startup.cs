@@ -48,13 +48,12 @@ namespace SampleApp
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             #endregion
 
-            //services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("InMemoryDb"));
             
 
             // Use SQL Database if in Azure, otherwise, use SQLite
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
                 services.AddDbContext<AppDbContext>(options =>
-                        options.UseSqlServer(Configuration.GetConnectionString("EnhancedEbookDbConnection")));
+                       options.UseSqlServer(Configuration.GetConnectionString("EnhancedEbookDbConnection")));
             else
                 services.AddDbContext<AppDbContext>(options =>
                         options.UseSqlite("Data Source=localdatabase.db"));
