@@ -22,6 +22,7 @@ namespace SampleApp.Utilities
         // and the official specifications for the file types you wish to add.
         private static readonly Dictionary<string, List<byte[]>> _fileSignature = new Dictionary<string, List<byte[]>>
         {
+            { ".epub", new List<byte[]> { new byte[] { 0x50, 0x4B, 0x03, 0x04 } } },
             { ".gif", new List<byte[]> { new byte[] { 0x47, 0x49, 0x46, 0x38 } } },
             { ".png", new List<byte[]> { new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A } } },
             { ".jpeg", new List<byte[]>
