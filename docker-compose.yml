@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  enhancedebookwebapp:
+    image: ${DOCKER_REGISTRY-}enhancedebookwebapp
+    build:
+      context: .
+      dockerfile: Dockerfile
+  clamav-server:
+    image: mkodockx/docker-clamav

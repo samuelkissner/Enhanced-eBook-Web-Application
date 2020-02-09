@@ -59,14 +59,6 @@ namespace SampleApp.Pages
                 return Page();
             }
 
-            // **WARNING!**
-            // In the following example, the file is saved without
-            // scanning the file's contents. In most production
-            // scenarios, an anti-virus/anti-malware scanner API
-            // is used on the file before making the file available
-            // for download or for use by other systems. 
-            // For more information, see the topic that accompanies 
-            // this sample.
 
             var file = new Ebook
             {

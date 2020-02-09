@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using nClam;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Net.Http.Headers;
 
@@ -108,7 +109,19 @@ namespace SampleApp.Utilities
             }
 
             try
-            {
+            {   
+                // scan the file for viruses on a ClamAV (anitvirus software) server 
+                // this server is located in a separate container (and connected via docker-compose)
+                var result = AntiVirusScan(formFile);
+                if (result.Result.Result != ClamScanResults.Clean)
+                {
+                    modelState.AddModelError(formFile.Name,
+                            $"{fieldDisplayName}({trustedFileNameForDisplay}) " +
+                            "falied the antivirus scan.");
+                    return new byte[0];
+                }
+
+                
                 using (var memoryStream = new MemoryStream())
                 {
                     await formFile.CopyToAsync(memoryStream);
@@ -139,59 +152,23 @@ namespace SampleApp.Utilities
             catch (Exception ex)
             {
                 modelState.AddModelError(formFile.Name,
-                    $"{fieldDisplayName}({trustedFileNameForDisplay}) upload failed. " +
-                    $"Please contact the Help Desk for support. Error: {ex.HResult}");
+                    $"{fieldDisplayName}({trustedFileNameForDisplay}) upload failed." +
+                    $"Error: {ex.HResult}");
                 // Log the exception
             }
 
             return new byte[0];
         }
 
-        public static async Task<byte[]> ProcessStreamedFile(
-            MultipartSection section, ContentDispositionHeaderValue contentDisposition, 
-            ModelStateDictionary modelState, string[] permittedExtensions, long sizeLimit)
+        // a method to scan the file for viruses on a ClamAV (anitvirus software) server 
+        // this server is located in a separate container (and connected via docker-compose)
+        private static Task<ClamScanResult> AntiVirusScan(IFormFile formFile)
         {
-            try
-            {
-                using (var memoryStream = new MemoryStream())
-                {
-                    await section.Body.CopyToAsync(memoryStream);
+           var clam = new ClamClient("clamav-server", 3310);
+           return clam.SendAndScanFileAsync(formFile.OpenReadStream());
 
-                    // Check if the file is empty or exceeds the size limit.
-                    if (memoryStream.Length == 0)
-                    {
-                        modelState.AddModelError("File", "The file is empty.");
-                    }
-                    else if (memoryStream.Length > sizeLimit)
-                    {
-                        var megabyteSizeLimit = sizeLimit / 1048576;
-                        modelState.AddModelError("File",
-                        $"The file exceeds {megabyteSizeLimit:N1} MB.");
-                    }
-                    else if (!IsValidFileExtensionAndSignature(
-                        contentDisposition.FileName.Value, memoryStream, 
-                        permittedExtensions))
-                    {
-                        modelState.AddModelError("File",
-                            "The file type isn't permitted or the file's " +
-                            "signature doesn't match the file's extension.");
-                    }
-                    else
-                    {
-                        return memoryStream.ToArray();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                modelState.AddModelError("File",
-                    "The upload failed. Please contact the Help Desk " +
-                    $" for support. Error: {ex.HResult}");
-                // Log the exception
-            }
-
-            return new byte[0];
         }
+
 
         private static bool IsValidFileExtensionAndSignature(string fileName, Stream data, string[] permittedExtensions)
         {
