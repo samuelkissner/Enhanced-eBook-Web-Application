@@ -1,68 +1,71 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Upload Files Sample";
+    ViewData["Title"] = "Ebook List";
 }
 
-<h1>Files in the database</h1>
+    <h1>Enhanced Ebook Manager</h1>
+<p>
+    <a asp-page="/BufferedSingleFileUploadDb">Upload an .epub File</a>
+</p>
 
 @if (Model.DatabaseFiles.Count == 0)
 {
     <p>
-        No files are available. Visit one of the file upload scenario pages to upload one or more files.
+        No files are available.
     </p>
 }
 else
 {
-<table>
-    <thead>
-        <tr>
-            <th></th>
-            <th>
-                @Html.DisplayNameFor(model => model.DatabaseFiles[0].UntrustedName) /
-                @Html.DisplayNameFor(model => model.DatabaseFiles[0].Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DatabaseFiles[0].Author)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DatabaseFiles[0].UploadDT)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DatabaseFiles[0].Size)
-            </th>
-            <th>
-                <code>FileStreamResult</code> from database
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var ebook in Model.DatabaseFiles)
-        {
+    <table>
+        <thead>
             <tr>
-                <td>
-                    <a asp-page="./DeleteDbFile" asp-route-id="@ebook.ID">Delete</a>
-                </td>
-                <td>
-                    <b>@ebook.UntrustedName</b><br>
-                    @Html.DisplayFor(modelItem => ebook.Title)
-                </td>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => ebook.Author)
-                </td>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => ebook.UploadDT)
-                </td>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => ebook.Size)
-                </td>
-                <td class="text-center">
-                    <a asp-page-handler="DownloadDb" asp-route-id="@ebook.ID">Download</a>
-                </td>
+                <th></th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DatabaseFiles[0].UntrustedName) /
+                    @Html.DisplayNameFor(model => model.DatabaseFiles[0].Title)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.DatabaseFiles[0].Author)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.DatabaseFiles[0].UploadDT)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.DatabaseFiles[0].Size)
+                </th>
+                <th class="text-center">
+                    <code>FileStreamResult</code> from database
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var ebook in Model.DatabaseFiles)
+            {
+                <tr>
+                    <td>
+                        <a asp-page="./DeleteDbFile" asp-route-id="@ebook.ID">Delete</a>
+                    </td>
+                    <td>
+                        <b>@ebook.UntrustedName</b><br>
+                        @Html.DisplayFor(modelItem => ebook.Title)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => ebook.Author)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => ebook.UploadDT)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => ebook.Size)
+                    </td>
+                    <td class="text-center">
+                        <a asp-page-handler="DownloadDb" asp-route-id="@ebook.ID">Download</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 
 
