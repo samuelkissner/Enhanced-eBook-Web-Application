@@ -34,7 +34,6 @@ namespace EnhancedEbookWebApp.Pages
 
         public void OnGet()
         {
-            //logger.LogInformation("Work, just fucking work, my fucking god why don't you work?");
         }
 
         public async Task<IActionResult> OnPostUploadAsync()
