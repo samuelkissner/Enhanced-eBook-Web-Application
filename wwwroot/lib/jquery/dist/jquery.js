@@ -3681,7 +3681,8 @@ jQuery.extend( {
 				},
 
 				// Get a promise for this deferred
-				// If obj is provided, the promise aspect is added to the object
+				// If obj is provided, the promise aspect is 
+				object
 				promise: function( obj ) {
 					return obj != null ? jQuery.extend( obj, promise ) : promise;
 				}

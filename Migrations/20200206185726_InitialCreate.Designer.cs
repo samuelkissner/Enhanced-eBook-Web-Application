@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SampleApp.Data;
+using EnhancedEbookWebApp.Data;
 
-namespace SampleApp.Migrations
+namespace EnhancedEbookWebApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20200206185726_InitialCreate")]
@@ -18,7 +18,7 @@ namespace SampleApp.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
-            modelBuilder.Entity("SampleApp.Models.Ebook", b =>
+            modelBuilder.Entity("EnhancedEbookWebApp.Models.Ebook", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();

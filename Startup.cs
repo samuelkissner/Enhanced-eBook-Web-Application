@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SampleApp.Data;
-using SampleApp.Filters;
+using EnhancedEbookWebApp.Data;
+using EnhancedEbookWebApp.Filters;
+using Microsoft.AspNetCore.HttpOverrides;
 
-
-namespace SampleApp
+namespace EnhancedEbookWebApp
 {
     public class Startup
     {
@@ -48,7 +48,7 @@ namespace SampleApp
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             #endregion
 
-            
+           
 
             // Use SQL Database if in Azure, otherwise, use SQLite
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
@@ -64,6 +64,7 @@ namespace SampleApp
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

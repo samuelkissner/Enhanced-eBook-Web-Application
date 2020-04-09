@@ -5,22 +5,25 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
-using SampleApp.Data;
-using SampleApp.Models;
-using SampleApp.Utilities;
+using Microsoft.Extensions.Logging;
+using EnhancedEbookWebApp.Data;
+using EnhancedEbookWebApp.Models;
+using EnhancedEbookWebApp.Utilities;
 
-namespace SampleApp.Pages
+namespace EnhancedEbookWebApp.Pages
 {
     public class BufferedSingleFileUploadDbModel : PageModel
     {
         private readonly AppDbContext _context;
+        private readonly ILogger<BufferedSingleFileUploadDbModel> logger;
         private readonly long _fileSizeLimit;
         private readonly string[] _permittedExtensions = { ".epub" };
 
         public BufferedSingleFileUploadDbModel(AppDbContext context, 
-            IConfiguration config)
+            IConfiguration config, ILogger<BufferedSingleFileUploadDbModel> logger)
         {
             _context = context;
+            this.logger = logger;
             _fileSizeLimit = config.GetValue<long>("FileSizeLimit");
         }
 
@@ -31,6 +34,7 @@ namespace SampleApp.Pages
 
         public void OnGet()
         {
+            //logger.LogInformation("Work, just fucking work, my fucking god why don't you work?");
         }
 
         public async Task<IActionResult> OnPostUploadAsync()
@@ -74,6 +78,11 @@ namespace SampleApp.Pages
             _context.Ebook.Add(file);
             await _context.SaveChangesAsync();
 
+            //logging
+            string clientIP = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+            logger.LogInformation($"An ebook (id= {file.ID}, title= \"{file.Title}\", author= {file.Author}, filename= {file.UntrustedName})  was added to the database by a client with the following ip address: {clientIP}");
+
+
             return RedirectToPage("./Index");
         }
     }
@@ -84,10 +93,12 @@ namespace SampleApp.Pages
         [Display(Name = "File")]
         public IFormFile FormFile { get; set; }
 
+        [Required]
         [Display(Name = "Title")]
         [StringLength(50, MinimumLength = 0)]
         public string Title { get; set; }
 
+        [Required]
         [Display(Name = "Author")]
         [StringLength(50, MinimumLength = 0)]
         public string Author { get; set; }

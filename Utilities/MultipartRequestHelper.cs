@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Microsoft.Net.Http.Headers;
 
-namespace SampleApp.Utilities
+namespace EnhancedEbookWebApp.Utilities
 {
     public static class MultipartRequestHelper
     {

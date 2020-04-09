@@ -2,7 +2,7 @@ using System;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace SampleApp.Filters
+namespace EnhancedEbookWebApp.Filters
 {
     #region snippet_DisableFormValueModelBindingAttribute
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace SampleApp.Filters
+namespace EnhancedEbookWebApp.Filters
 {
     #region snippet_GenerateAntiforgeryTokenCookieAttribute
     public class GenerateAntiforgeryTokenCookieAttribute : ResultFilterAttribute

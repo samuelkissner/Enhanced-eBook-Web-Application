@@ -2,18 +2,21 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using SampleApp.Data;
-using SampleApp.Models;
+using EnhancedEbookWebApp.Data;
+using EnhancedEbookWebApp.Models;
+using Microsoft.Extensions.Logging;
 
-namespace SampleApp.Pages
+namespace EnhancedEbookWebApp.Pages
 {
     public class DeleteDbFileModel : PageModel
     {
         private readonly AppDbContext _context;
+        private readonly ILogger<DeleteDbFileModel> logger;
 
-        public DeleteDbFileModel(AppDbContext context)
+        public DeleteDbFileModel(AppDbContext context, ILogger<DeleteDbFileModel> logger)
         {
             _context = context;
+            this.logger = logger;
         }
 
         [BindProperty]
@@ -50,6 +53,10 @@ namespace SampleApp.Pages
                 _context.Ebook.Remove(RemoveFile);
                 await _context.SaveChangesAsync();
             }
+
+            //logging
+            string clientIP = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+            logger.LogInformation($"An ebook (id= {RemoveFile.ID}, title= \"{RemoveFile.Title}\", author= {RemoveFile.Author}, filename= {RemoveFile.UntrustedName})  was removed from the database by a client with the following ip address: {clientIP}");
 
             return RedirectToPage("/Index");
         }

@@ -6,20 +6,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using EnhancedEbookWebApp.Data;
+using EnhancedEbookWebApp.Models;
 
-using SampleApp.Data;
-using SampleApp.Models;
-
-namespace SampleApp.Pages
+namespace EnhancedEbookWebApp.Pages
 {
     public class IndexModel : PageModel
     {
         private readonly AppDbContext _context;
-      
+
         public IndexModel(AppDbContext context)
         {
             _context = context;
-           
         }
 
         public IList<Ebook> DatabaseFiles { get; private set; }

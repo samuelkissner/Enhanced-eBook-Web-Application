@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SampleApp.Models;
+using EnhancedEbookWebApp.Models;
 
-namespace SampleApp.Data
+namespace EnhancedEbookWebApp.Data
 {
     public class AppDbContext : DbContext
     {
