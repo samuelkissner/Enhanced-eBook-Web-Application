@@ -25,7 +25,7 @@ namespace EnhancedEbookWebApp
                      logging.AddDebug();
                      //logging.AddEventSourceLogger();
                    
-                     //logging.AddAzureWebAppDiagnostics();
+                     logging.AddAzureWebAppDiagnostics();
                  })
                  
                 .UseStartup<Startup>();
