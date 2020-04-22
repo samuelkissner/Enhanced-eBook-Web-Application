@@ -8,3 +8,5 @@ services:
       dockerfile: Dockerfile
   clamav-server:
     image: mkodockx/docker-clamav
+    volumes:
+       - ./freshclam.conf:/etc/clamav/conf/freshclam.conf
