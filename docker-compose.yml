@@ -9,4 +9,4 @@ services:
   clamav-server:
     image: mkodockx/docker-clamav
     volumes:
-       - ./freshclam.conf:/etc/clamav/conf/freshclam.conf
+     - ./freshclam.conf:/usr/local/etc/clamav/freshclam.conf
