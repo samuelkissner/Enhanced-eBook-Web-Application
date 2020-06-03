@@ -5,9 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using EnhancedEbookWebApp.Data;
 using EnhancedEbookWebApp.Models;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EnhancedEbookWebApp.Pages
 {
+    [Authorize]
     public class DeleteDbFileModel : PageModel
     {
         private readonly AppDbContext _context;

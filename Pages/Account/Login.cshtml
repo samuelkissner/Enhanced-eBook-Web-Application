@@ -1,0 +1,34 @@
+﻿@page
+@model EnhancedEbookWebApp.LoginModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>User Login</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="LoginCredentials.Email"></label>
+                <input asp-for="LoginCredentials.Email" class="form-control" />
+                <span asp-validation-for="LoginCredentials.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LoginCredentials.Password"></label>
+                <input asp-for="LoginCredentials.Password" class="form-control" />
+                <span asp-validation-for="LoginCredentials.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <input asp-for="LoginCredentials.RememberMe" />
+                    @Html.DisplayNameFor(m => m.LoginCredentials.RememberMe)
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+</div>

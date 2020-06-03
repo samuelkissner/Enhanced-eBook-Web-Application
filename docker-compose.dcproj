@@ -9,17 +9,10 @@
     <DockerServiceName>enhancedebookwebapp</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="conf\clamd.conf" />
-    <None Include="conf\freshclam.conf" />
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>
     </None>
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="conf\onerrorexecute.d\" />
-    <Folder Include="conf\onupdateexecute.d\" />
-    <Folder Include="conf\virusevent.d\" />
   </ItemGroup>
 </Project>

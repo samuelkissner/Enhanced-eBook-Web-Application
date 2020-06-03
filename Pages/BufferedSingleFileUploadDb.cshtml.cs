@@ -9,9 +9,11 @@ using Microsoft.Extensions.Logging;
 using EnhancedEbookWebApp.Data;
 using EnhancedEbookWebApp.Models;
 using EnhancedEbookWebApp.Utilities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EnhancedEbookWebApp.Pages
 {
+    [Authorize]
     public class BufferedSingleFileUploadDbModel : PageModel
     {
         private readonly AppDbContext _context;
