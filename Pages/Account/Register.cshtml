@@ -26,6 +26,12 @@
                 <span asp-validation-for=@Model.RegistrationInfo.ConfirmPassword class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
+
+            @section Scripts{
+
+                <partial name="_ValidationScriptsPartial" />
+            }
+
         </form>
     </div>
 </div>
