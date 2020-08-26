@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Identity;
 
 namespace EnhancedEbookWebApp
 {
-    //testing
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -50,24 +49,20 @@ namespace EnhancedEbookWebApp
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             #endregion
 
-            // Use SQL Database if in Azure, otherwise, use SQLite
+           // Use SQL Database if in Azure, otherwise, use SQLite
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
-            {
                 services.AddDbContext<AppDbContext>(options =>
                        options.UseSqlServer(Configuration.GetConnectionString("EnhancedEbookDbConnection")));
-            }
             else
-            {
                 services.AddDbContext<AppDbContext>(options =>
                         options.UseSqlite("Data Source=localdatabase.db"));
-            }
+
             // Automatically perform database migration
             services.BuildServiceProvider().GetService<AppDbContext>().Database.Migrate();
 
             // Add identity services to app for login/authentication/authorization managemement through entity framework core
             services.AddIdentity<IdentityUser, IdentityRole>()
                     .AddEntityFrameworkStores<AppDbContext>();
-
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

@@ -65,9 +65,7 @@ namespace EnhancedEbookWebApp
     public class NewUserRegistration
     {
         [Required]
-        //[EmailAddress(ErrorMessage = "Email format is not valid")]
-        [RegularExpression(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$",
-        ErrorMessage = "Invalid email format.")]
+        [EmailAddress]
         public string Email { get; set; }
         [Required]
         [DataType(DataType.Password)]
