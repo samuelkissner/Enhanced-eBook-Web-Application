@@ -56,8 +56,8 @@ namespace EnhancedEbookWebApp
             app.UseStaticFiles();
             app.UseRouting();
 
-            //middleware for authenticating users
-            app.UseAuthentication();
+           
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
