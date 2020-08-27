@@ -1,14 +1,13 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using EnhancedEbookWebApp.Data;
-using EnhancedEbookWebApp.Filters;
-using Microsoft.AspNetCore.HttpOverrides;
+
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Hosting;
 
 namespace EnhancedEbookWebApp
 {
@@ -23,31 +22,7 @@ namespace EnhancedEbookWebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            #region snippet_AddMvc
-            services.AddMvc()
-                .AddRazorPagesOptions(options =>
-                    {
-                        options.Conventions
-                            .AddPageApplicationModelConvention("/StreamedSingleFileUploadDb",
-                                model =>
-                                {
-                                    model.Filters.Add(
-                                        new GenerateAntiforgeryTokenCookieAttribute());
-                                    model.Filters.Add(
-                                        new DisableFormValueModelBindingAttribute());
-                                });
-                        options.Conventions
-                            .AddPageApplicationModelConvention("/StreamedSingleFileUploadPhysical",
-                                model =>
-                                {
-                                    model.Filters.Add(
-                                        new GenerateAntiforgeryTokenCookieAttribute());
-                                    model.Filters.Add(
-                                        new DisableFormValueModelBindingAttribute());
-                                });
-                    })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            #endregion
+            services.AddRazorPages();
 
            // Use SQL Database if in Azure, otherwise, use SQLite
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
@@ -65,7 +40,7 @@ namespace EnhancedEbookWebApp
                     .AddEntityFrameworkStores<AppDbContext>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             
             if (env.IsDevelopment())
@@ -75,13 +50,20 @@ namespace EnhancedEbookWebApp
             else
             {
                 app.UseExceptionHandler("/Error");
+                app.UseHsts();
             }
 
             app.UseStaticFiles();
+            app.UseRouting();
 
             //middleware for authenticating users
             app.UseAuthentication();
-            app.UseMvcWithDefaultRoute();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapRazorPages();
+            });
+
         }
     }
 }
